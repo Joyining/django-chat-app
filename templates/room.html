@@ -61,31 +61,25 @@
   <body>
     <h2>{{room.name}} - Django Chat</h2>
 
-    <div id="display">
-      <!-- <div class="container darker">
-  <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
-  <span class="time-left">20th, April 2021</span>
-</div> -->
-    </div>
+    <div id="display"></div>
 
-    {% comment %}
     <script>
       $(document).ready(function () {
         setInterval(function () {
           $.ajax({
             type: 'GET',
-            url: '/getMessages/{{room}}/',
+            url: '/get_messages/{{room.name}}/',
             success: function (response) {
-              console.log(response);
+              // console.log(response);
               $('#display').empty();
               for (var key in response.messages) {
                 var temp =
                   "<div class='container darker'><b>" +
-                  response.messages[key].user +
+                  response.messages[key].user_name +
                   '</b><p>' +
                   response.messages[key].value +
                   "</p><span class='time-left'>" +
-                  response.messages[key].date +
+                  response.messages[key].timestamp +
                   '</span></div>';
                 $('#display').append(temp);
               }
@@ -97,7 +91,6 @@
         }, 1000);
       });
     </script>
-    {% endcomment %}
 
     <div class="container">
       <style>
@@ -168,7 +161,7 @@
           csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function (data) {
-          alert(data);
+          // alert(data)
         },
       });
       document.getElementById('message_value').value = '';
