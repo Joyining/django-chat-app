@@ -59,7 +59,7 @@
     ></script>
   </head>
   <body>
-    <h2>{{room}} - DjChat</h2>
+    <h2>{{room.name}} - Django Chat</h2>
 
     <div id="display">
       <!-- <div class="container darker">
@@ -68,6 +68,7 @@
 </div> -->
     </div>
 
+    {% comment %}
     <script>
       $(document).ready(function () {
         setInterval(function () {
@@ -96,6 +97,7 @@
         }, 1000);
       });
     </script>
+    {% endcomment %}
 
     <div class="container">
       <style>
@@ -136,17 +138,17 @@
         {% csrf_token %}
         <input
           type="hidden"
-          name="username"
-          id="username"
-          value="{{username}}"
+          name="user_name"
+          id="user_name"
+          value="{{user_name}}"
         />
+        <input type="hidden" name="room_id" id="room_id" value="{{room.id}}" />
         <input
-          type="hidden"
-          name="room_id"
-          id="room_id"
-          value="{{room_details.id}}"
+          type="text"
+          name="message_value"
+          id="message_value"
+          width="100px"
         />
-        <input type="text" name="message" id="message" width="100px" />
         <input type="submit" value="Send" />
       </form>
     </div>
@@ -160,16 +162,16 @@
         type: 'POST',
         url: '/send',
         data: {
-          username: $('#username').val(),
+          user_name: $('#user_name').val(),
           room_id: $('#room_id').val(),
-          message: $('#message').val(),
+          message_value: $('#message_value').val(),
           csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function (data) {
-          //alert(data)
+          alert(data);
         },
       });
-      document.getElementById('message').value = '';
+      document.getElementById('message_value').value = '';
     });
   </script>
 </html>
