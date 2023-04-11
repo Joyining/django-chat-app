@@ -18,4 +18,4 @@ class Message(models.Model):
     room = models.CharField(max_length=100, default='')
 
     def __str__(self):
-        return self.id
+        return str(self.id)
